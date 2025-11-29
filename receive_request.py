@@ -13,7 +13,7 @@ load_dotenv()
 
 AIPIPE_TOKEN = os.getenv("AIPIPE_TOKEN")
 AIPIPE_URL = "https://aipipe.org/openrouter/v1/chat/completions"
-SECRET_KEY = os.getenv("SECRET_KEY")  # same as the one you gave in the Google Form
+SECRET_KEY = os.getenv("SECRET_KEY")  
 
 app = FastAPI()
 
@@ -36,7 +36,7 @@ def process_request(data: dict):
     Scritly do not generate any preamble or boilerplate sentence in you respose,just the code.
 """
 
-    # call AIPipe (OpenRouter-style /v1/chat/completions)
+   
     llm_response = httpx.post(
         AIPIPE_URL,
         headers={
@@ -100,21 +100,21 @@ async def receive_request(request: Request, background_tasks: BackgroundTasks):
     secret = data.get("secret")
     url = data.get("url")
 
-    # basic field check
+
     if not email or not secret or not url:
         return JSONResponse(
             status_code=400,
             content={"message": "Invalid JSON"},
         )
 
-    # validate the secret (API token)
+   
     if secret != API_TOKEN:  # API_TOKEN is the token we have stored on our side
         return JSONResponse(
             status_code=403,
             content={"message": "Forbidden"},
         )
 
-    # secret ok: schedule background work and return 200
+   
     background_tasks.add_task(process_request, data)
     return JSONResponse(
         status_code=200,
@@ -127,3 +127,4 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
