@@ -1,0 +1,17 @@
+1. gets a request.
+
+//{
+  //"email": "your email", // Student email ID
+  //"secret": "your secret", // Student-provided secret
+  //"url": "https://example.com/quiz-834" // A unique task URL
+  // ... other fields}
+
+1.1. create post endpoint to get the above payload and Your endpoint must:
+
+-Verify the secret matches what we already have hardcoded.
+-Respond with a HTTP 200 JSON response if the secret matches. 
+-Respond with HTTP 400 for invalid JSON and HTTP 403 for invalid secrets. 
+
+1.2. give the url to llm and tell it to generate code to visit the url with httpx 
+and do the task it tells to do ,solve the quiz and post the answer in the respective url 
+mentined in the page.recive the respose and again do whatever it tells to do.
